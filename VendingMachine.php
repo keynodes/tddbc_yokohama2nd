@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Product.php';
+
 class VendingMachine
 {
     private $receivedArray = array();
@@ -33,5 +35,7 @@ class VendingMachine
 
     public function getProductInfo()
     {
+        $product = new Product();
+        return $product->getProductInfo();
     }
 }

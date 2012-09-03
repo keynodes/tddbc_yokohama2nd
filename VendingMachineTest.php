@@ -52,4 +52,9 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
         $this->assertSame(1, $this->vendingMachine->receive(1));
         $this->assertSame(10, $this->vendingMachine->totalAmount());
     }
+
+    public function testジュースの情報を取得すると初期状態の情報が返却される()
+    {
+       $this->assertSame(array('name' => 'コーラ', 'price' => 120, 'stock' => 5), $this->vendingMachine->getProductInfo());
+    }
 }
