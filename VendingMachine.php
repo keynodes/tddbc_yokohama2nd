@@ -29,8 +29,11 @@ class VendingMachine
 
     public function refund()
     {
+        $change = $this->receivedArray;
+        $this->receivedArray = array();
+
         // 払い戻しした後の処理がない。
-        return $this->receivedArray;
+        return $change;
     }
 
     public function getProductInfo()
