@@ -12,6 +12,11 @@ class VendingMachine
     public function __construct()
     {
         $this->product = new Product();
+
+        // 初期状態をセット
+        $this->product->setProductPrice(120);
+        $this->product->setProductStock(5);
+        $this->product->setProductName('コーラ');
     }
 
     public function totalAmount()
@@ -50,6 +55,27 @@ class VendingMachine
     {
         return $this->product->getProductName();
     }
+
+    public function setProductPrice($price)
+    {
+        $this->product->setProductPrice($price);
+    }
+
+    public function getProductPrice()
+    {
+        return $this->product->getProductPrice();
+    }
+
+    public function setProductStock($stock)
+    {
+        $this->product->setProductStock($stock);
+    }
+
+    public function getProductStock()
+    {
+        return $this->product->getProductStock();
+    }
+
     public function getProductInfo()
     {
         return $this->product->getProductInfo();

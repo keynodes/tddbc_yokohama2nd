@@ -70,4 +70,28 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
         $this->vendingMachine->setProductName('ダイエットコーラ');
         $this->assertSame('ダイエットコーラ', $this->vendingMachine->getProductName());
     }
+
+    public function test初期状態のジュースの値段は120円()
+    {
+        $this->assertSame(120, $this->vendingMachine->getProductPrice());
+    }
+
+    public function testジュースの価格を150円に設定する()
+    {
+        $this->vendingMachine->setProductPrice(150);
+        $this->assertSame(150, $this->vendingMachine->getProductPrice());
+    }
+
+    public function test初期状態のジュースの在庫は5本()
+    {
+        $this->assertSame(5, $this->vendingMachine->getProductStock());
+
+    }
+
+    public function testジュースの在庫を10本に設定する()
+    {
+        $this->vendingMachine->setProductStock(10);
+        $this->assertSame(10, $this->vendingMachine->getProductStock());
+    }
+
 }

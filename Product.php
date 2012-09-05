@@ -8,9 +8,6 @@ class Product
 
     public function __construct()
     {
-        $this->name  = "コーラ";
-        $this->price = 120;
-        $this->stock = 5;
     }
 
     public function setProductName($name)
@@ -21,6 +18,26 @@ class Product
     public function getProductName()
     {
         return $this->name;
+    }
+
+    public function setProductPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    public function getProductPrice()
+    {
+        return $this->price;
+    }
+
+    public function setProductStock($stock)
+    {
+        $this->stock = $stock;
+    }
+
+    public function getProductStock()
+    {
+        return $this->stock;
     }
 
     public function getProductInfo()
