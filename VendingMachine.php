@@ -7,6 +7,13 @@ class VendingMachine
     private $receivedArray = array();
     private $whiteListMoney = array(10, 50, 100, 500, 1000);
 
+    private $product;
+
+    public function __construct()
+    {
+        $this->product = new Product();
+    }
+
     public function totalAmount()
     {
         $amount = 0;
@@ -24,7 +31,6 @@ class VendingMachine
         }
 
         array_push($this->receivedArray, $amount);
-
     }
 
     public function refund()
@@ -32,13 +38,20 @@ class VendingMachine
         $change = $this->receivedArray;
         $this->receivedArray = array();
 
-        // 払い戻しした後の処理がない。
         return $change;
     }
 
+    public function setProductName($name)
+    {
+        $this->product->setProductName($name);
+    }
+
+    public function getProductName()
+    {
+        return $this->product->getProductName();
+    }
     public function getProductInfo()
     {
-        $product = new Product();
-        return $product->getProductInfo();
+        return $this->product->getProductInfo();
     }
 }
