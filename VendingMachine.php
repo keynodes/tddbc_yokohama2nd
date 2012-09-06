@@ -87,6 +87,11 @@ class VendingMachine
 
     public function isPurchasable()
     {
-        return true;
+        if($this->product->getProductPrice() <= $this->totalAmount()) {
+
+            return '購入可能';
+        }
+
+        return '購入不可';
     }
 }
