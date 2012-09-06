@@ -84,4 +84,9 @@ class VendingMachine
     public function getSaleAmount() {
         return 0;
     }
+
+    public function isPurchasable()
+    {
+        return true;
+    }
 }
