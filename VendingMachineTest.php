@@ -94,4 +94,8 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
         $this->assertSame(10, $this->vendingMachine->getProductStock());
     }
 
+    public function test販売していない状態での売上金額は0円となる()
+    {
+        $this->assertSame(0, $this->vendingMachine->getSaleAmount());
+    }
 }

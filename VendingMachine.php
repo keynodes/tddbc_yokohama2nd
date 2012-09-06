@@ -80,4 +80,8 @@ class VendingMachine
     {
         return $this->product->getProductInfo();
     }
+
+    public function getSaleAmount() {
+        return 0;
+    }
 }
