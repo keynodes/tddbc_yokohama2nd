@@ -8,6 +8,7 @@ class VendingMachine
     private $whiteListMoney = array(10, 50, 100, 500, 1000);
 
     private $product;
+    private $saleAmount;
 
     public function __construct()
     {
@@ -17,6 +18,7 @@ class VendingMachine
         $this->product->setProductPrice(120);
         $this->product->setProductStock(5);
         $this->product->setProductName('コーラ');
+        $this->saleAmount = 0;
     }
 
     public function totalAmount()
@@ -82,16 +84,41 @@ class VendingMachine
     }
 
     public function getSaleAmount() {
-        return 0;
+        return $this->saleAmount;
+    }
+
+    public function addSaleAmount($saleAmount) {
+        $this->saleAmount += $saleAmount;
     }
 
     public function isPurchasable()
     {
-        if($this->product->getProductPrice() <= $this->totalAmount()) {
-
+        if($this->product->getProductPrice() <= $this->totalAmount() &&
+            $this->product->getProductStock() > 0
+        ) {
             return '購入可能';
         }
 
         return '購入不可';
+    }
+
+    public function purchse()
+    {
+        if(!$this->isPurchasable())
+        {
+            return false;
+        }
+
+        // 在庫を減らす
+        $stock = $this->product->getProductStock();
+        $stock--;
+        $this->product->setProductStock($stock);
+
+        // 売上金に加算
+        $saleAmount = $this->getProductPrice();
+        $this->addSaleAmount($saleAmount);
+
+        return true;
+
     }
 }

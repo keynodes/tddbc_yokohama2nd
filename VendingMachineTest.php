@@ -114,4 +114,19 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
         $this->assertNotSame('購入可能', $this->vendingMachine->isPurchasable());
 
     }
+
+    public function test初期状態で購入操作を行うと売上金は0円である()
+    {
+        $this->assertSame(0, $this->vendingMachine->getSaleAmount());
+    }
+
+    public function test初期状態で150円投入し購入操作を行うと売上金が120円となる、ジュースの在庫は4本になる()
+    {
+        $this->vendingMachine->receive(50);
+        $this->vendingMachine->receive(100);
+        $this->vendingMachine->purchse();
+
+        $this->assertSame(4, $this->vendingMachine->getProductStock());
+        $this->assertSame(120, $this->vendingMachine->getSaleAmount());
+    }
 }
