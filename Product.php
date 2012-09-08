@@ -48,6 +48,9 @@ class Product
     public function reduceProductStock($num)
     {
         $this->stock -= $num;
+        if($this->stock < 0) {
+            $this->stock = 0;
+        }
     }
 
     public function getProductInfo()
