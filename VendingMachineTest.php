@@ -10,11 +10,18 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
         $this->vendingMachine = new VendingMachine();
     }
 
+
+    /**
+     * 総計表示に関するテスト
+     */
     public function test何も投入しないとゼロ円が表示される()
     {
         $this->assertSame(0, $this->vendingMachine->totalAmount());
     }
 
+    /**
+     * 投入に関するテスト
+     */
     public function test10円を投入すると総計が10円になる()
     {
         $this->vendingMachine->receive(10);
@@ -28,6 +35,9 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
         $this->assertSame(60, $this->vendingMachine->totalAmount());
     }
 
+    /**
+     * 払い戻しに関するテスト
+     */
     public function test何も投入していない時払い戻すと0円が返る()
     {
         $this->assertSame(0, $this->vendingMachine->refund());
@@ -60,6 +70,9 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
         $this->assertSame(10, $this->vendingMachine->totalAmount());
     }
 
+    /**
+     * ジュースの状態に関するテスト
+     */
     public function testジュースの情報を取得すると初期状態の情報が返却される()
     {
        $this->assertSame(array('name' => 'コーラ', 'price' => 120, 'stock' => 5), $this->vendingMachine->getProductInfo());
@@ -69,9 +82,12 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
     {
         $this->vendingMachine->setProductName('ダイエットコーラ');
         $this->assertSame('ダイエットコーラ', $this->vendingMachine->getProductName());
-    }
+   }
 
-    public function test初期状態のジュースの値段は120円()
+    /**
+     * ジュースの価格に関するテスト
+     */
+    public function test初期状態のジュースの価格は120円()
     {
         $this->assertSame(120, $this->vendingMachine->getProductPrice());
     }
@@ -82,65 +98,18 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
         $this->assertSame(150, $this->vendingMachine->getProductPrice());
     }
 
+    /**
+     * ジュースの在庫に関するテスト
+     */
     public function test初期状態のジュースの在庫は5本()
     {
         $this->assertSame(5, $this->vendingMachine->getProductStock());
-
     }
 
     public function testジュースの在庫を10本に設定する()
     {
         $this->vendingMachine->setProductStock(10);
         $this->assertSame(10, $this->vendingMachine->getProductStock());
-    }
-
-    public function test販売していない状態での売上金額は0円となる()
-    {
-        $this->assertSame(0, $this->vendingMachine->getSaleAmount());
-    }
-
-    public function test初期状態で150円投入し購入できるか確認するとtrue()
-    {
-        $this->vendingMachine->receive(50);
-        $this->vendingMachine->receive(100);
-
-        $this->assertTrue($this->vendingMachine->isPurchasable());
-    }
-
-    public function test初期状態で100円投入し購入できるか確認するとfalse()
-    {
-        $this->vendingMachine->receive(100);
-
-        $this->assertFalse($this->vendingMachine->isPurchasable());
-
-    }
-
-    public function test初期状態で購入操作を行うと売上金は0円である()
-    {
-        $this->assertSame(0, $this->vendingMachine->getSaleAmount());
-    }
-
-    public function test初期状態で150円投入し購入操作を行うと売上金120円、ジュースの在庫4本、払い戻し金30円になる()
-    {
-        $this->vendingMachine->receive(50);
-        $this->vendingMachine->receive(100);
-        $this->vendingMachine->purchse();
-
-        $this->assertSame(  4, $this->vendingMachine->getProductStock());
-        $this->assertSame(120, $this->vendingMachine->getSaleAmount());
-        $this->assertSame( 30, $this->vendingMachine->refund());
-    }
-
-    public function test投入金額不足時に購入操作をすると何も起こらない()
-    {
-        $this->assertFalse($this->vendingMachine->purchse());
-    }
-
-    public function test在庫不足時に購入操作をすると何も起こらない()
-    {
-        $this->vendingMachine->reduceProductStock(10);
-        $this->assertSame(0, $this->vendingMachine->getProductStock());
-        $this->assertFalse($this->vendingMachine->purchse());
     }
 
     public function test初期状態から在庫を1増やすと在庫が6になる()
@@ -160,7 +129,64 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
         $this->vendingMachine->reduceProductStock(5);
         $this->vendingMachine->reduceProductStock(1);
         $this->assertSame(0, $this->vendingMachine->getProductStock());
+    }
 
+    /**
+     * 売上金額に関するテスト
+     */
+    public function test販売していない状態での売上金額は0円となる()
+    {
+        $this->assertSame(0, $this->vendingMachine->getSaleAmount());
+    }
+
+    public function test初期状態で購入操作を行うと売上金は0円である()
+    {
+        $this->assertSame(0, $this->vendingMachine->getSaleAmount());
+    }
+
+    /**
+     * 購入可能かの判定に関するテスト
+     */
+    public function test初期状態で150円投入し購入できるか確認するとtrue()
+    {
+        $this->vendingMachine->receive(50);
+        $this->vendingMachine->receive(100);
+
+        $this->assertTrue($this->vendingMachine->isPurchasable());
+    }
+
+    public function test初期状態で100円投入し購入できるか確認するとfalse()
+    {
+        $this->vendingMachine->receive(100);
+
+        $this->assertFalse($this->vendingMachine->isPurchasable());
+
+    }
+
+    /**
+     * 購入操作に関するテスト
+     */
+    public function test投入金額不足時に購入操作をすると何も起こらない()
+    {
+        $this->assertFalse($this->vendingMachine->purchse());
+    }
+
+    public function test在庫不足時に購入操作をすると何も起こらない()
+    {
+        $this->vendingMachine->reduceProductStock(10);
+        $this->assertSame(0, $this->vendingMachine->getProductStock());
+        $this->assertFalse($this->vendingMachine->purchse());
+    }
+
+    public function test初期状態で150円投入し購入操作を行うと売上金120円、ジュースの在庫4本、払い戻し金30円になる()
+    {
+        $this->vendingMachine->receive(50);
+        $this->vendingMachine->receive(100);
+        $this->vendingMachine->purchse();
+
+        $this->assertSame(  4, $this->vendingMachine->getProductStock());
+        $this->assertSame(120, $this->vendingMachine->getSaleAmount());
+        $this->assertSame( 30, $this->vendingMachine->refund());
     }
 
 }
