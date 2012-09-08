@@ -132,8 +132,19 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
 
     public function test投入金額不足時に購入操作をすると何も起こらない()
     {
-
-
         $this->assertFalse($this->vendingMachine->purchse());
     }
+
+    public function test初期状態から在庫を1増やすと在庫が6になる()
+    {
+    }
+
+    public function test初期状態から在庫を1減らすと在庫が4になる()
+    {
+    }
+
+    public function test在庫0の状態で在庫を減らすと何も起こらない()
+    {
+    }
+
 }
