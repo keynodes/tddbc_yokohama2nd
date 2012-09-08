@@ -137,6 +137,8 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
 
     public function test初期状態から在庫を1増やすと在庫が6になる()
     {
+        $this->vendingMachine->increaseProductStock(1);
+        $this->assertSame(6, $this->vendingMachine->getProductStock());
     }
 
     public function test初期状態から在庫を1減らすと在庫が4になる()

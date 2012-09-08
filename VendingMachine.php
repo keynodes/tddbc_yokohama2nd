@@ -122,4 +122,9 @@ class VendingMachine
         return true;
 
     }
+
+    public function increaseProductStock($num)
+    {
+       $this->product->increaseProductStock($num);
+    }
 }
