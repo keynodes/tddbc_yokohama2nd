@@ -4,7 +4,7 @@ require_once 'Product.php';
 
 class VendingMachine
 {
-    private $receivedArray = array();
+    private $received       = 0;
     private $whiteListMoney = array(10, 50, 100, 500, 1000);
 
     private $product;
@@ -23,12 +23,7 @@ class VendingMachine
 
     public function totalAmount()
     {
-        $amount = 0;
-        foreach($this->receivedArray as $received)
-        {
-            $amount += $received;
-        }
-        return $amount;
+        return $this->received;
     }
 
     public function receive($amount)
@@ -37,16 +32,13 @@ class VendingMachine
             return $amount;
         }
 
-        array_push($this->receivedArray, $amount);
+        $this->received += $amount;
     }
 
     public function refund()
     {
-        //$change = $this->receivedArray;
         $change = $this->totalAmount();
-
-        $this->receivedArray = array();
-        //$this->receivedArray = 0;
+        $this->received = 0;
 
         return $change;
     }
