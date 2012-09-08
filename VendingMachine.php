@@ -4,21 +4,24 @@ require_once 'Product.php';
 
 class VendingMachine
 {
-    private $received       = 0;
     private $whiteListMoney = array(10, 50, 100, 500, 1000);
 
     private $product;
     private $saleAmount;
+    private $received;
 
     public function __construct()
     {
         $this->product = new Product();
 
-        // 初期状態をセット
+        // お金に関する情報をセット
+        $this->saleAmount = 0;
+        $this->received   = 0;
+
+        // 商品の状態をセット
         $this->product->setProductPrice(120);
         $this->product->setProductStock(5);
         $this->product->setProductName('コーラ');
-        $this->saleAmount = 0;
     }
 
     public function totalAmount()
@@ -106,9 +109,7 @@ class VendingMachine
         }
 
         // 在庫を減らす
-        $stock = $this->product->getProductStock();
-        $stock--;
-        $this->product->setProductStock($stock);
+        $this->product->reduceProductStock(1);
 
         // 売上金に加算
         $saleAmount = $this->getProductPrice();
@@ -118,7 +119,6 @@ class VendingMachine
         $this->received -= $saleAmount;
 
         return true;
-
     }
 
     public function increaseProductStock($num)
