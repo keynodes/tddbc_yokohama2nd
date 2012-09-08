@@ -143,6 +143,8 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
 
     public function test初期状態から在庫を1減らすと在庫が4になる()
     {
+        $this->vendingMachine->reduceProductStock(1);
+        $this->assertSame(4, $this->vendingMachine->getProductStock());
     }
 
     public function test在庫0の状態で在庫を減らすと何も起こらない()

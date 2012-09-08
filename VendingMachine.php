@@ -127,4 +127,9 @@ class VendingMachine
     {
        $this->product->increaseProductStock($num);
     }
+
+    public function reduceProductStock($num)
+    {
+       $this->product->reduceProductStock($num);
+    }
 }
