@@ -42,8 +42,11 @@ class VendingMachine
 
     public function refund()
     {
-        $change = $this->receivedArray;
+        //$change = $this->receivedArray;
+        $change = $this->totalAmount();
+
         $this->receivedArray = array();
+        //$this->receivedArray = 0;
 
         return $change;
     }

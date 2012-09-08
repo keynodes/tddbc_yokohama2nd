@@ -28,28 +28,28 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
         $this->assertSame(60, $this->vendingMachine->totalAmount());
     }
 
-    public function test何も投入していない時払い戻しで空が返る()
+    public function test何も投入していない時払い戻すと0円が返る()
     {
-        $this->assertEmpty($this->vendingMachine->refund());
+        $this->assertSame(0, $this->vendingMachine->refund());
     }
 
     public function test10円を投入した時払い戻しで10円が表示される()
     {
         $this->vendingMachine->receive(10);
-        $this->assertSame(array(10), $this->vendingMachine->refund());
+        $this->assertSame(10, $this->vendingMachine->refund());
     }
 
-    public function test100円と1000円札を投入して払い戻すと100円と1000円札が返ってくる()
+    public function test100円と1000円札を投入して払い戻すと1100円が返ってくる()
     {
         $this->vendingMachine->receive(100);
         $this->vendingMachine->receive(1000);
-        $this->assertSame(array(100,1000), $this->vendingMachine->refund());
+        $this->assertSame(1100, $this->vendingMachine->refund());
     }
 
     public function test払い戻し後の総計は0円になる()
     {
         $this->vendingMachine->receive(100);
-        $this->assertSame(array(100), $this->vendingMachine->refund());
+        $this->assertSame(100, $this->vendingMachine->refund());
         $this->assertSame(0,   $this->vendingMachine->totalAmount());
     }
 
