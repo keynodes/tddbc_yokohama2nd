@@ -96,10 +96,11 @@ class VendingMachine
         if($this->product->getProductPrice() <= $this->totalAmount() &&
             $this->product->getProductStock() > 0
         ) {
-            return '購入可能';
+
+            return true;
         }
 
-        return '購入不可';
+        return false;
     }
 
     public function purchse()
