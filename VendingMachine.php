@@ -4,31 +4,29 @@ require_once 'Product.php';
 
 class VendingMachine
 {
-    private $receivedArray = array();
     private $whiteListMoney = array(10, 50, 100, 500, 1000);
 
     private $product;
     private $saleAmount;
+    private $received;
 
     public function __construct()
     {
         $this->product = new Product();
 
-        // 初期状態をセット
+        // お金に関する情報をセット
+        $this->saleAmount = 0;
+        $this->received   = 0;
+
+        // 商品の状態をセット
         $this->product->setProductPrice(120);
         $this->product->setProductStock(5);
         $this->product->setProductName('コーラ');
-        $this->saleAmount = 0;
     }
 
     public function totalAmount()
     {
-        $amount = 0;
-        foreach($this->receivedArray as $received)
-        {
-            $amount += $received;
-        }
-        return $amount;
+        return $this->received;
     }
 
     public function receive($amount)
@@ -37,13 +35,13 @@ class VendingMachine
             return $amount;
         }
 
-        array_push($this->receivedArray, $amount);
+        $this->received += $amount;
     }
 
     public function refund()
     {
-        $change = $this->receivedArray;
-        $this->receivedArray = array();
+        $change = $this->totalAmount();
+        $this->received = 0;
 
         return $change;
     }
@@ -96,10 +94,11 @@ class VendingMachine
         if($this->product->getProductPrice() <= $this->totalAmount() &&
             $this->product->getProductStock() > 0
         ) {
-            return '購入可能';
+
+            return true;
         }
 
-        return '購入不可';
+        return false;
     }
 
     public function purchse()
@@ -110,15 +109,25 @@ class VendingMachine
         }
 
         // 在庫を減らす
-        $stock = $this->product->getProductStock();
-        $stock--;
-        $this->product->setProductStock($stock);
+        $this->product->reduceProductStock(1);
 
         // 売上金に加算
         $saleAmount = $this->getProductPrice();
         $this->addSaleAmount($saleAmount);
 
-        return true;
+        // 総計から減算
+        $this->received -= $saleAmount;
 
+        return true;
+    }
+
+    public function increaseProductStock($num)
+    {
+       $this->product->increaseProductStock($num);
+    }
+
+    public function reduceProductStock($num)
+    {
+       $this->product->reduceProductStock($num);
     }
 }

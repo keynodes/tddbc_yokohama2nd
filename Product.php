@@ -40,6 +40,19 @@ class Product
         return $this->stock;
     }
 
+    public function increaseProductStock($num)
+    {
+        $this->stock += $num;
+    }
+
+    public function reduceProductStock($num)
+    {
+        $this->stock -= $num;
+        if($this->stock < 0) {
+            $this->stock = 0;
+        }
+    }
+
     public function getProductInfo()
     {
         return array('name' => $this->name, 'price' => $this->price, 'stock' => $this->stock);
