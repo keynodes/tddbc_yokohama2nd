@@ -114,6 +114,9 @@ class VendingMachine
         $saleAmount = $this->getProductPrice();
         $this->addSaleAmount($saleAmount);
 
+        // 総計から減算
+        $this->received -= $saleAmount;
+
         return true;
 
     }
