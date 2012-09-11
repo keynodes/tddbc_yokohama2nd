@@ -7,9 +7,9 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->vendingMachine = new VendingMachine();
+        $product = array("name" => "コーラ", "price" => 120, "stock" => 5);
+        $this->vendingMachine = new VendingMachine($product);
     }
-
 
     /**
      * 総計表示に関するテスト

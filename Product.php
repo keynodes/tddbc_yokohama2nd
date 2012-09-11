@@ -6,8 +6,11 @@ class Product
     private $price;
     private $stock;
 
-    public function __construct()
+    public function __construct($product)
     {
+        $this->name  = $product['name'];
+        $this->price = $product['price'];
+        $this->stock = $product['stock'];
     }
 
     public function setProductName($name)

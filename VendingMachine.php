@@ -10,18 +10,13 @@ class VendingMachine
     private $saleAmount;
     private $received;
 
-    public function __construct()
+    public function __construct($product)
     {
-        $this->product = new Product();
+        $this->product = new Product($product);
 
         // お金に関する情報をセット
         $this->saleAmount = 0;
         $this->received   = 0;
-
-        // 商品の状態をセット
-        $this->product->setProductPrice(120);
-        $this->product->setProductStock(5);
-        $this->product->setProductName('コーラ');
     }
 
     public function totalAmount()
