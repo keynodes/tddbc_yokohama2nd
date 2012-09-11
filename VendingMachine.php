@@ -58,24 +58,45 @@ class VendingMachine
         $this->product->setProductPrice($price);
     }
 
-    public function getProductPrice()
+    public function getProductPrice($name)
     {
-        return $this->product->getProductPrice();
+        foreach($this->productList as $product) {
+            if ($product->getProductName() === $name) {
+                return $product->getProductPrice();
+            }
+        }
+        return false;
     }
 
-    public function setProductStock($stock)
+    public function setProductStock($name, $stock)
     {
-        $this->product->setProductStock($stock);
+        foreach($this->productList as $product) {
+            if ($product->getProductName() === $name) {
+                $product->setProductStock($stock);
+
+                return true;
+            }
+        }
     }
 
-    public function getProductStock()
+    public function getProductStock($name)
     {
-        return $this->product->getProductStock();
+        foreach($this->productList as $product) {
+            if ($product->getProductName() === $name) {
+                return $product->getProductStock();
+            }
+        }
+        return false;
     }
 
-    public function getProductInfo()
+    public function getProductInfo($name)
     {
-        return $this->product->getProductInfo();
+        foreach($this->productList as $product) {
+            if ($product->getProductName() === $name) {
+                return $product->getProductInfo();
+            }
+        }
+        return false;
     }
 
     public function getSaleAmount() {
@@ -86,46 +107,66 @@ class VendingMachine
         $this->saleAmount += $saleAmount;
     }
 
-    public function isPurchasable()
+    public function isPurchasable($name)
     {
-        if($this->product->getProductPrice() <= $this->totalAmount() &&
-            $this->product->getProductStock() > 0
-        ) {
+        foreach($this->productList as $product) {
+            if ($product->getProductName() === $name) {
 
-            return true;
+                if($product->getProductPrice() <= $this->totalAmount() &&
+                    $product->getProductStock() > 0
+                ) {
+                    return true;
+                }
+            }
         }
 
         return false;
     }
 
-    public function purchse()
+    public function purchse($name)
     {
-        if(!$this->isPurchasable())
-        {
-            return false;
+        foreach($this->productList as $product) {
+            if ($product->getProductName() === $name) {
+
+                if(!$this->isPurchasable($name))
+                {
+                    return false;
+                }
+
+                // 在庫を減らす
+                $product->reduceProductStock(1);
+
+                // 売上金に加算
+                $saleAmount = $product->getProductPrice();
+                $this->addSaleAmount($saleAmount);
+
+                // 総計から減算
+                $this->received -= $saleAmount;
+
+                return true;
+            }
         }
-
-        // 在庫を減らす
-        $this->product->reduceProductStock(1);
-
-        // 売上金に加算
-        $saleAmount = $this->getProductPrice();
-        $this->addSaleAmount($saleAmount);
-
-        // 総計から減算
-        $this->received -= $saleAmount;
-
-        return true;
     }
 
-    public function increaseProductStock($num)
+    public function increaseProductStock($name, $num)
     {
-       $this->product->increaseProductStock($num);
+        foreach($this->productList as $product) {
+            if ($product->getProductName() === $name) {
+                $product->increaseProductStock($num);
+
+                return true;
+            }
+        }
     }
 
-    public function reduceProductStock($num)
+    public function reduceProductStock($name, $num)
     {
-       $this->product->reduceProductStock($num);
+        foreach($this->productList as $product) {
+            if ($product->getProductName() === $name) {
+                $product->reduceProductStock($num);
+                return true;
+            }
+        }
     }
 
     public function getProductList()
@@ -135,5 +176,17 @@ class VendingMachine
             $productList[] = $product->getProductInfo();
         }
         return $productList;
+    }
+
+    public function getInstanceByName($name)
+    {
+        foreach($this->productList as $product) {
+            if ($product->getProductName() === $name) {
+                return $product;
+            }
+        }
+//        $empty = new Product();
+        //        return $empty;
+        return null;
     }
 }
