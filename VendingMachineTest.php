@@ -72,6 +72,16 @@ class VendingMachineTest extends PHPUnit_Framework_TestCase
         $this->assertSame(10, $this->vendingMachine->totalAmount());
     }
 
+    public function test商品の一覧を取得すると商品一覧の配列が返る()
+    {
+        $expectedArray[] = array("name" => "コーラ",      "price" => 120, "stock" => 5);
+        $expectedArray[] = array("name" => "レッドブル",  "price" => 200, "stock" => 5);
+        $expectedArray[] = array("name" => "水",          "price" => 100, "stock" => 5);
+
+        $this->assertSame($expectedArray, $this->vendingMachine->getProductList());
+    }
+
+
     /**
      * ジュースの状態に関するテスト
      */

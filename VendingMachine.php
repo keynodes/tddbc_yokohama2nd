@@ -127,4 +127,13 @@ class VendingMachine
     {
        $this->product->reduceProductStock($num);
     }
+
+    public function getProductList()
+    {
+        $productList = array();
+        foreach($this->productList as $product) {
+            $productList[] = $product->getProductInfo();
+        }
+        return $productList;
+    }
 }
