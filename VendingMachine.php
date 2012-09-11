@@ -6,13 +6,15 @@ class VendingMachine
 {
     private $whiteListMoney = array(10, 50, 100, 500, 1000);
 
-    private $product;
+    private $productList;
     private $saleAmount;
     private $received;
 
-    public function __construct($product)
+    public function __construct($productList)
     {
-        $this->product = new Product($product);
+        foreach($productList as $product) {
+            $this->productList[] = new Product($product);
+        }
 
         // お金に関する情報をセット
         $this->saleAmount = 0;
