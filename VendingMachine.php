@@ -150,23 +150,26 @@ class VendingMachine
 
     public function increaseProductStock($name, $num)
     {
-        foreach($this->productList as $product) {
-            if ($product->getProductName() === $name) {
-                $product->increaseProductStock($num);
+        $product = $this->getInstanceByName($name);
+        if($product instanceof Product) {
+            $product->increaseProductStock($num);
 
-                return true;
-            }
+            return $product->getProductStock();
         }
+
+        return false;
     }
 
     public function reduceProductStock($name, $num)
     {
-        foreach($this->productList as $product) {
-            if ($product->getProductName() === $name) {
-                $product->reduceProductStock($num);
-                return true;
-            }
+        $product = $this->getInstanceByName($name);
+        if($product instanceof Product) {
+            $product->reduceProductStock($num);
+
+            return $product->getProductStock();
         }
+
+        return false;
     }
 
     public function getProductList()
@@ -185,8 +188,6 @@ class VendingMachine
                 return $product;
             }
         }
-//        $empty = new Product();
-        //        return $empty;
         return null;
     }
 }
